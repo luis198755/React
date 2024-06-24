@@ -1,17 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import mqtt from 'mqtt';
+/***
+    * Browser
+    * This document explains how to use MQTT over WebSocket with the ws and wss protocols.
+    * EMQX's default port for ws connection is 8083 and for wss connection is 8084.
+    * Note that you need to add a path after the connection address, such as /mqtt.
+    */
+const url = 'ws://3.94.215.189:8083/mqtt'
+/***
+    * Node.js
+    * This document explains how to use MQTT over TCP with both mqtt and mqtts protocols.
+    * EMQX's default port for mqtt connections is 1883, while for mqtts it is 8883.
+    */
+//const url = 'mqtt://3.94.215.189:1883'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Create an MQTT client instance
+const options = {
+  // Clean session
+  clean: true,
+  connectTimeout: 4000,
+  // Authentication
+  clientId: 'emqx_test'
+}
+const client  = mqtt.connect(url, options)
+client.on('connect', function () {
+  console.log('Connected')
+  // Subscribe to a topic
+  client.subscribe('test', function (err) {
+    if (!err) {
+      // Publish a message to a topic
+      client.publish('test', 'Hello mqtt')
+    }
+  })
+})
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Receive messages
+client.on('message', function (topic, message) {
+  // message is Buffer
+  console.log(message.toString())
+  client.end()
+})
