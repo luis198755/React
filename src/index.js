@@ -64,6 +64,24 @@ function processEscenarios(json) {
   return result;
 }
 
+// Fetch data from the server and process it
+fetch('/random')
+  .then(response => response.text()) // Use text() instead of json() to log raw response
+  .then(data => {
+    console.log('Raw response:', data);
+    let jsonData;
+    try {
+      jsonData = JSON.parse(data);
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      return;
+    }
+    let result = processEscenarios(JSON.stringify(jsonData));
+    console.log(result);
+  })
+.catch(error => console.error('Error:', error));
+
+
 // Example usage:
 let jsonData = '{"fases":{"1":[6]},"escenarios":{"1":[0,614006784,1638400,614006784,1638400,614006784,1638400,614006784,1638400,614006784,1226375168,2451062784,2449997824,2451062784,2449997824,2451062784,2449997824,2451062784,2449997824,2451062784,2452127744,2428698624,2428567552,2428698624,2428567552,2428698624,2428567552,2428698624,2428567552,2428698624,2428829696,1]},"ciclos":{"1":[0,10000,375,375,375,375,375,375,375,375,3000,10000,375,375,375,375,375,375,375,375,3000,12000,375,375,375,375,375,375,375,375,3000],"2":[0,5000,375,375,375,375,375,375,375,375,3000,12000,375,375,375,375,375,375,375,375,3000,15000,375,375,375,375,375,375,375,375,3000],"3":[0,10000,375,375,375,375,375,375,375,375,3000,21000,375,375,375,375,375,375,375,375,3000,10000,375,375,375,375,375,375,375,375,3000],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0]},"eventos":{"1":[5,0,1,0],"2":[12,0,2,10],"3":[17,0,3,20],"4":[0],"5":[0],"6":[0],"7":[0],"8":[0]}}';
 let result = processEscenarios(jsonData);
@@ -87,24 +105,6 @@ console.log(result);
 //     console.log(result);
 //   })
 //   .catch(error => console.error('Error:', error));
-
-// Fetch data from the server and process it
-fetch('/random')
-  .then(response => response.text()) // Use text() instead of json() to log raw response
-  .then(data => {
-    console.log('Raw response:', data);
-    let jsonData;
-    try {
-      jsonData = JSON.parse(data);
-    } catch (e) {
-      console.error('Error parsing JSON:', e);
-      return;
-    }
-    let result = processEscenarios(JSON.stringify(jsonData));
-    console.log(result);
-  })
-  .catch(error => console.error('Error:', error));
-
 
 // for (let i = 0; i < 10; i++){
 //   let positions = findBinaryOnesPositions(4294967295-i);
