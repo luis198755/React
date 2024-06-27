@@ -70,20 +70,41 @@ let result = processEscenarios(jsonData);
 console.log(result);
 
 // Fetching JSON data from the URL and processing it
-fetch('/static')
-    .then(response => response.json())
-    .then(data => {
-        let result = processEscenarios(data);
-        console.log(result);
-    })
-    .catch(error => console.error('Error fetching data:', error));
+// fetch('/static')
+//     .then(response => response.json())
+//     .then(data => {
+//         let result = processEscenarios(data);
+//         console.log(result);
+//     })
+//     .catch(error => console.error('Error fetching data:', error));
 
 
 // Instead of making requests to the full URL, use relative paths
-fetch('/data')
-  .then(response => response.json())
-  .then(data => console.log(data))
+// fetch('/random')
+//   .then(response => response.json())
+//   .then(data => {
+//     let result = processEscenarios(data);
+//     console.log(result);
+//   })
+//   .catch(error => console.error('Error:', error));
+
+// Fetch data from the server and process it
+fetch('/random')
+  .then(response => response.text()) // Use text() instead of json() to log raw response
+  .then(data => {
+    console.log('Raw response:', data);
+    let jsonData;
+    try {
+      jsonData = JSON.parse(data);
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      return;
+    }
+    let result = processEscenarios(JSON.stringify(jsonData));
+    console.log(result);
+  })
   .catch(error => console.error('Error:', error));
+
 
 // for (let i = 0; i < 10; i++){
 //   let positions = findBinaryOnesPositions(4294967295-i);
