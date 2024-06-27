@@ -115,3 +115,25 @@ console.log(result);
 // Example usage:
 //let number = 4294967295; // 29 in binary is 11101
 
+function int32ToBinary(num) {
+  // Ensure the number is within the range of a 32-bit signed integer
+  if (num < -2147483648 || num > 2147483647) {
+      throw new RangeError("Number must be a 32-bit signed integer.");
+  }
+
+  // Initialize an array to hold the binary digits
+  let binary = [];
+
+  // Loop through each bit, starting from the least significant (rightmost)
+  for (let i = 0; i < 32; i++) {
+      // Use bitwise AND and shift operations to get the current bit value
+      binary.push((num & (1 << i)) !== 0 ? 1 : 0);
+  }
+
+  // Join the array into a string and return it
+  return binary.reverse().join('');
+}
+
+// Example usage:
+let exampleInt = -2147483648; // Example integer
+console.log(`The binary representation of ${exampleInt} is: ${int32ToBinary(exampleInt)}`);
