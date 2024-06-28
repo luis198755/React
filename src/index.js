@@ -137,3 +137,14 @@ function int32ToBinary(num) {
 // Example usage:
 let exampleInt = -2147483648; // Example integer
 console.log(`The binary representation of ${exampleInt} is: ${int32ToBinary(exampleInt)}`);
+
+// Using bitwise operators
+let value = 4294967294; // Maximum value for an unsigned 32-bit integer
+let unsignedInt32 = (value >>> 0) & 0xFFFFFFFF;
+console.log(unsignedInt32); // Output: 4294967295
+
+// Using typed arrays
+let buffer = new ArrayBuffer(4);
+let uint32Array = new Uint32Array(buffer);
+uint32Array[0] = 4;
+console.log(uint32Array[0]); // Output: 4294967295
