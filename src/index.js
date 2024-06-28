@@ -115,9 +115,9 @@ console.log(result);
 // Example usage:
 //let number = 4294967295; // 29 in binary is 11101
 
-function int32ToBinary(num) {
+function UnsignedInt32ToBinary(num) {
   // Ensure the number is within the range of a 32-bit signed integer
-  if (num < -2147483648 || num > 2147483647) {
+  if (num < 0 || num > 4294967295) {
       throw new RangeError("Number must be a 32-bit signed integer.");
   }
 
@@ -136,7 +136,7 @@ function int32ToBinary(num) {
 
 // Example usage:
 let exampleInt = 2147483647; // Example integer
-console.log(`The binary representation of ${exampleInt} is: ${int32ToBinary(exampleInt)}`);
+console.log(`The binary representation of ${exampleInt} is: ${UnsignedInt32ToBinary(exampleInt)}`);
 
 // Using bitwise operators
 let value = 4294967292; // Maximum value for an unsigned 32-bit integer
@@ -146,6 +146,6 @@ console.log(unsignedInt32); // Output: 4294967295
 // Using typed arrays
 let buffer = new ArrayBuffer(4);
 let uint32Array = new Uint32Array(buffer);
-uint32Array[0] = 4294967295;
+uint32Array[0] = 614006784;
 console.log(uint32Array[0]); // Output: 4294967295
-console.log(`The binary representation of ${uint32Array[0]} is: ${int32ToBinary(uint32Array[0])}`);
+console.log(`The binary representation of ${uint32Array[0]} is: ${UnsignedInt32ToBinary(uint32Array[0])}`);
